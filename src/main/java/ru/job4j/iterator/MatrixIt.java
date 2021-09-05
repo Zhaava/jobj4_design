@@ -1,4 +1,4 @@
-package ru.job4j.it;
+package ru.job4j.iterator;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -14,23 +14,17 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        int countEmpty = 0;
-        for (int[] el : data) {
-            if (el.length == 0) {
-                countEmpty++;
-            }
+        while (row < data.length && column >= data[row].length) {
+            row++;
+            column = 0;
         }
-        return row < data.length && countEmpty < data.length;
+        return row < data.length;
     }
 
     @Override
     public Integer next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
-        }
-        while (column >= data[row].length) {
-            row++;
-            column = 0;
         }
         return data[row][column++];
     }
